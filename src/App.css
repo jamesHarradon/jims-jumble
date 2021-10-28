@@ -29,7 +29,9 @@ margin: 0;
 #word {
   width: 500px;
   min-height: 100px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid black;
   font-size: 3em;
 }
@@ -61,7 +63,9 @@ margin: 0;
 
 button {
   font-size: 2em;
-  display: inline;
+  padding: 2%;
+  margin: 4%;
+  
 }
 
 

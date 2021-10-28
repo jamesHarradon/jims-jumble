@@ -1,35 +1,40 @@
 import React, { useState } from "react";
 
 
-const ActiveWord = ({chosenLetters}) => {
+const ActiveWord = ({selectedLetters}) => {
     const [checkedWord, setCheckedWord] = useState('');
 
-    const lettersToWord = (chosenLetters) => {
+    const lettersToWord = (selectedLetters) => {
         let word = [];
-        chosenLetters.map(letter => word.push(letter.letter));
+        selectedLetters.map(letter => word.push(letter.letter));
         return word.join('');
     }
 
     const isWord = async () => {
-        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${lettersToWord(chosenLetters)}`);
+        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${lettersToWord(selectedLetters)}`);
         console.log(response)
         if(response.ok) {
-            setCheckedWord(lettersToWord(chosenLetters));
+            setCheckedWord(lettersToWord(selectedLetters));
         } else {
             alert('Submitted Word Not Found!');
         }
     }
 
-    const onSubmitHandler = (e) => {
-        e.preventDefault();
+    const onSubmitHandler = () => {
         isWord();  
+    }
+
+    const onClearHandler = () => {
+        selectedLetters.map(letter => letter)
     }
 
     return (
         <div id='word-container'>
             <div id='word-btn-flex'>
-                <p id='word'>{lettersToWord(chosenLetters)}</p>
-                <button onClick={onSubmitHandler}>Submit</button>  
+                <p id='word'>{lettersToWord(selectedLetters)}</p>
+                <button id='clear' onClick={onClearHandler}>Clear</button> 
+                <button id='submit' onClick={onSubmitHandler}>Submit</button>  
+                 
             </div> 
         </div>
     )

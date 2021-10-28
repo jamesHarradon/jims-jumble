@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid'
 
 const LetterGrid = () => {
     const [ letters, setLetters ] = useState([]);
-    const [ chosenLetters, setChosenLetters ] = useState([]);
+    const [ selectedLetters, setSelectedLetters ] = useState([]);
 
     const generateGrid = () => {
         const letterArray = [];
@@ -36,7 +36,7 @@ const LetterGrid = () => {
     const onClickHandler = (e) => {
         if (e.target.className === 'letter unselected') {
             e.target.className = 'letter selected';
-            setChosenLetters((prev) => {
+            setSelectedLetters((prev) => {
                 return [
                     ...prev, 
                     {
@@ -47,7 +47,7 @@ const LetterGrid = () => {
             });
         } else {
             e.target.className = 'letter unselected';
-            setChosenLetters((prev) => {
+            setSelectedLetters((prev) => {
                 return prev.filter(letter => letter.id !== e.target.dataset.id)
             })
         }
@@ -55,7 +55,7 @@ const LetterGrid = () => {
 
     return (
         <div id='letter-container'>
-            <ActiveWord chosenLetters={chosenLetters} />
+            <ActiveWord selectedLetters={selectedLetters} />
             <div id='letter-grid'>
             {letters.map(letter => {
                 return <p className='letter unselected' onClick={onClickHandler} key={letter.id} data-id={letter.id} data-value={letter.letter}>{letter.letter}</p>
