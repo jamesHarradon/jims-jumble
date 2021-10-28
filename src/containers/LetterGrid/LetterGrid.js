@@ -7,6 +7,8 @@ import { nanoid } from 'nanoid'
 const LetterGrid = () => {
     const [ letters, setLetters ] = useState([]);
     const [ selectedLetters, setSelectedLetters ] = useState([]);
+    
+    
 
     const generateGrid = () => {
         const letterArray = [];
@@ -20,8 +22,7 @@ const LetterGrid = () => {
                 }
             }
         }
-
-        letterArray.forEach((letter, ind, arr) => arr.splice(ind, 1, {id: nanoid(), letter: letter, selected: false}));
+        letterArray.forEach((letter, ind, arr) => arr.splice(ind, 1, {id: nanoid(), letter: letter}));
         letterArray.sort(function() {
             return 0.5 - Math.random()
             });
@@ -33,33 +34,15 @@ const LetterGrid = () => {
         generateGrid();
     }, []);
 
-
-    const onClickHandler = (e) => {
-        if (e.target.className === 'letter unselected') {
-            e.target.className = 'letter selected';
-            setSelectedLetters((prev) => {
-                return [
-                    ...prev, 
-                    {
-                        id: e.target.dataset.id,
-                        letter: e.target.dataset.value
-                    }
-                ]
-            });
-        } else {
-            e.target.className = 'letter unselected';
-            setSelectedLetters((prev) => {
-                return prev.filter(letter => letter.id !== e.target.dataset.id)
-            })
-        }
-    }
+   
+    
 
     return (
-        <div id='letter-container'>
+        <div id='game-container'>  
             <ActiveWord selectedLetters={selectedLetters} setSelectedLetters={setSelectedLetters} />
             <div id='letter-grid'>
             {letters.map(letter => {
-                return <Letter onClickHandler={onClickHandler} key={letter.id} id={letter.id} value={letter.letter} selected={letter.selected}/>
+                return <Letter setSelectedLetters={setSelectedLetters} key={letter.id} id={letter.id} value={letter.letter}/>
             })}
             </div>
         </div>

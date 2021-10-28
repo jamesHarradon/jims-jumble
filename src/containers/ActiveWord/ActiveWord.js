@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import PlayerOneWords from "../../Components/PlayerOneWords/PlayerOneWords";
+import PlayerTwoWords from "../../Components/PlayerTwoWords/PlayerTwoWords";
+import { nanoid } from 'nanoid';
 
 
 const ActiveWord = (props) => {
-    const [checkedWord, setCheckedWord] = useState('');
+    const [playerOneWords, setPlayerOneWords] = useState([]);
+    const [playerTwoWords, setPlayerTwoWords] = useState([]);
+    const [player, setPlayer] = useState('Player1');
 
     const lettersToWord = (selectedLetters) => {
         let word = [];
@@ -10,35 +15,69 @@ const ActiveWord = (props) => {
         return word.join('');
     }
 
-    const isWord = async () => {
-        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${lettersToWord(props.selectedLetters)}`);
-        console.log(response)
-        if(response.ok) {
-            setCheckedWord(lettersToWord(props.selectedLetters));
-        } else {
-            alert('Submitted Word Not Found!');
-        }
-    }
-
-    const onSubmitHandler = () => {
-        isWord();  
-    }
-
     const onClearHandler = () => {
         let grid = document.getElementById('letter-grid');
         let letters = grid.querySelectorAll('p.selected');
-        console.log(letters)
         letters.forEach(letter => letter.className = 'letter unselected');
         props.setSelectedLetters([]);
     }
 
+    // const isWord = async(word) => {
+    //     const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+    //     if (response.ok) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+    const hideSubmitted = () => {
+        let grid = document.getElementById('letter-grid');
+        let letters = grid.querySelectorAll('p.selected');
+        letters.forEach(letter => letter.className = 'letter submitted');
+    }
+
+    const onSubmitHandler = () => {
+        let wordToSubmit = lettersToWord(props.selectedLetters);
+        let isWord;
+        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordToSubmit}`)
+        .then(response => {
+            if(response.ok) {
+                isWord = true;
+            }else {
+                isWord = false;
+            }
+        })
+        if(isWord) {
+            if (player === 'Player1') {
+                setPlayerOneWords(prev => [...prev, {id: nanoid(), word: wordToSubmit, letters: props.selectedLetters}]);
+                hideSubmitted();
+                props.setSelectedLetters([]);
+            } else {
+                setPlayerTwoWords(prev => [...prev, {id: nanoid(), word: wordToSubmit, letters: props.selectedLetters}]);
+                hideSubmitted();
+                props.setSelectedLetters([]);
+            }
+        } else {
+            alert('Submitted Word Not Found!');
+            onClearHandler();
+        }
+        setPlayer(player === 'Player1' ? 'Player2': 'Player1'); 
+        
+        
+    }
+
+
     return (
         <div id='word-container'>
-            <div id='word-btn-flex'>
-                <p id='word'>{lettersToWord(props.selectedLetters)}</p>
-                <button id='clear' onClick={onClearHandler}>Clear</button> 
-                <button id='submit' onClick={onSubmitHandler}>Submit</button>  
-                 
+            <div id='top-section' >
+                <PlayerOneWords words={playerOneWords} setWords={setPlayerOneWords} isTurn={player === 'Player1' ? true : false}/>
+                <div id='word-btn-flex'>
+                    <p id='word'>{lettersToWord(props.selectedLetters)}</p>
+                    <button id='clear' onClick={onClearHandler}>Clear</button> 
+                    <button id='submit' onClick={onSubmitHandler}>Submit</button>
+                </div> 
+                <PlayerTwoWords words={playerTwoWords} setWords={setPlayerTwoWords} isTurn={player === 'Player2' ? true : false}/> 
             </div> 
         </div>
     )
