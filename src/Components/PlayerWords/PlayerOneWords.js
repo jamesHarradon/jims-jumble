@@ -6,3 +6,5 @@ const PlayerOneWords = () => {
 
 
 }
+
+export default PlayerOneWords;

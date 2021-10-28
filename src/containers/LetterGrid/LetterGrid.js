@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import ActiveWord from "../ActiveWord/ActiveWord";
+import Letter from "../Letter/Letter";
 import { nanoid } from 'nanoid'
 
 const LetterGrid = () => {
@@ -20,7 +21,7 @@ const LetterGrid = () => {
             }
         }
 
-        letterArray.forEach((letter, ind, arr) => arr.splice(ind, 1, {id: nanoid(), letter: letter}));
+        letterArray.forEach((letter, ind, arr) => arr.splice(ind, 1, {id: nanoid(), letter: letter, selected: false}));
         letterArray.sort(function() {
             return 0.5 - Math.random()
             });
@@ -55,10 +56,10 @@ const LetterGrid = () => {
 
     return (
         <div id='letter-container'>
-            <ActiveWord selectedLetters={selectedLetters} />
+            <ActiveWord selectedLetters={selectedLetters} setSelectedLetters={setSelectedLetters} />
             <div id='letter-grid'>
             {letters.map(letter => {
-                return <p className='letter unselected' onClick={onClickHandler} key={letter.id} data-id={letter.id} data-value={letter.letter}>{letter.letter}</p>
+                return <Letter onClickHandler={onClickHandler} key={letter.id} id={letter.id} value={letter.letter} selected={letter.selected}/>
             })}
             </div>
         </div>
