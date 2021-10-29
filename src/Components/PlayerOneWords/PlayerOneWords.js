@@ -22,7 +22,7 @@ const PlayerOneWords = (props) => {
 
     return (
         <div id='playerOne' className='player'>
-            <h1 className={props.isTurn? 'red' : 'grey'}>Player One</h1>
+            <h1 className={props.isTurn? 'active' : 'inactive'}>Player One</h1>
             <ul>
             {props.words.map(word => {
                 return (

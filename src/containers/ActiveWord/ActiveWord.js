@@ -18,8 +18,9 @@ const ActiveWord = (props) => {
     const onClearHandler = () => {
         let grid = document.getElementById('letter-grid');
         let letters = grid.querySelectorAll('p.selected');
-        letters.forEach(letter => letter.className = 'letter unselected');
+        letters.forEach(letter => letter.className = 'letter preselected');
         props.setSelectedLetters([]);
+        
     }
 
     const isWord = async(word) => {

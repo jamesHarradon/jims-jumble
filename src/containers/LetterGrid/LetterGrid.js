@@ -10,6 +10,7 @@ const LetterGrid = () => {
     
     
     
+    
 
     const generateGrid = () => {
         const letterArray = [];
@@ -43,7 +44,7 @@ const LetterGrid = () => {
             <ActiveWord selectedLetters={selectedLetters} setSelectedLetters={setSelectedLetters} />
             <div id='letter-grid'>
             {letters.map(letter => {
-                return <Letter setSelectedLetters={setSelectedLetters} key={letter.id} id={letter.id} value={letter.letter}/>
+                return <Letter selectedLetters={selectedLetters} setSelectedLetters={setSelectedLetters} key={letter.id} id={letter.id} value={letter.letter}/>
             })}
             </div>
         </div>
