@@ -22,14 +22,25 @@ const ActiveWord = (props) => {
         props.setSelectedLetters([]);
     }
 
-    // const isWord = async(word) => {
-    //     const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-    //     if (response.ok) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
+    const isWord = async(word) => {
+        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+        if (response.ok) {
+            if (player === 'Player1') {
+                setPlayerOneWords(prev => [...prev, {id: nanoid(), word: word, letters: props.selectedLetters}]);
+                hideSubmitted();
+                props.setSelectedLetters([]);
+                
+            } else {
+                setPlayerTwoWords(prev => [...prev, {id: nanoid(), word: word, letters: props.selectedLetters}]);
+                hideSubmitted();
+                props.setSelectedLetters([]);  
+            }
+        } else {
+            alert('Submitted Word Not Found!');
+                onClearHandler();
+        }
+        setPlayer(player === 'Player1' ? 'Player2': 'Player1');
+    }
 
     const hideSubmitted = () => {
         let grid = document.getElementById('letter-grid');
@@ -39,32 +50,7 @@ const ActiveWord = (props) => {
 
     const onSubmitHandler = () => {
         let wordToSubmit = lettersToWord(props.selectedLetters);
-        let isWord;
-        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordToSubmit}`)
-        .then(response => {
-            if(response.ok) {
-                isWord = true;
-            }else {
-                isWord = false;
-            }
-        })
-        if(isWord) {
-            if (player === 'Player1') {
-                setPlayerOneWords(prev => [...prev, {id: nanoid(), word: wordToSubmit, letters: props.selectedLetters}]);
-                hideSubmitted();
-                props.setSelectedLetters([]);
-            } else {
-                setPlayerTwoWords(prev => [...prev, {id: nanoid(), word: wordToSubmit, letters: props.selectedLetters}]);
-                hideSubmitted();
-                props.setSelectedLetters([]);
-            }
-        } else {
-            alert('Submitted Word Not Found!');
-            onClearHandler();
-        }
-        setPlayer(player === 'Player1' ? 'Player2': 'Player1'); 
-        
-        
+        isWord(wordToSubmit);
     }
 
 
@@ -73,7 +59,7 @@ const ActiveWord = (props) => {
             <div id='top-section' >
                 <PlayerOneWords words={playerOneWords} setWords={setPlayerOneWords} isTurn={player === 'Player1' ? true : false}/>
                 <div id='word-btn-flex'>
-                    <p id='word'>{lettersToWord(props.selectedLetters)}</p>
+                    <p id='word' data-testid='word'>{lettersToWord(props.selectedLetters)}</p>
                     <button id='clear' onClick={onClearHandler}>Clear</button> 
                     <button id='submit' onClick={onSubmitHandler}>Submit</button>
                 </div> 

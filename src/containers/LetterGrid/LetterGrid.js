@@ -9,6 +9,7 @@ const LetterGrid = () => {
     const [ selectedLetters, setSelectedLetters ] = useState([]);
     
     
+    
 
     const generateGrid = () => {
         const letterArray = [];

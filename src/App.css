@@ -17,6 +17,7 @@ margin: 0;
 
 .App {
   text-align: center;
+  font-family: 'Comfortaa', cursive;
   
 }
 
@@ -59,6 +60,7 @@ margin: 0;
   margin: 50px;
   display: grid;
   grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+  grid-gap: 5px;
   
 }
 
@@ -69,12 +71,20 @@ margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: white;
   
   
 }
 
+.unselected {
+  background-color: rgb(202, 15, 202);
+  color:rgb(202, 15, 202);
+}
+
 .selected {
   background-color: aquamarine;
+  color: black;
+  border: 1px solid lightgray;
 }
 
 .submitted {
@@ -89,9 +99,13 @@ margin: 0;
 
 button {
   font-size: 2em;
-  padding: 2%;
-  margin: 4%;
-  
+  padding: 4%;
+  margin: 5%;
+  border: 1px solid lightgray;
+}
+
+button:hover {
+  background-color: rgb(199, 255, 199);
 }
 
 .player {
@@ -103,7 +117,7 @@ button {
 .player ul {
   list-style: none;
   width: 20vw;
-  height: 20vh;
+  height: 40vh;
   border: 1px solid grey;
   margin: 0 5%;
 }
