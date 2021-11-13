@@ -6,14 +6,16 @@ import Word from "../Word/Word";
 const PlayerOneWords = (props) => {
 
     const onClickHandler = (letters, word) => {
+        
         let grid = document.getElementById('letter-grid');
         let letterIds = letters.map(el => el.id);
-        let submittedLetters = grid.querySelectorAll('p.submitted');
-        let submittedIds = Array.from(grid.querySelectorAll('p.submitted')).map(el => el.dataset.id);
-        
-        if(letters.every(letter => submittedIds.includes(letter.id))) {
-            submittedLetters.forEach(letter => letter.className = 'letter stolen');
-        }
+        let submittedLetters = Array.from(grid.querySelectorAll('div.submitted'));
+
+        submittedLetters.forEach(letter => {
+            if (letterIds.includes(letter.dataset.id)) {
+                letter.className = 'letter stolen';
+            } 
+        });
 
         props.setWords(prev => {
             return prev.filter(el => el.word !== word)

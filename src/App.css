@@ -75,16 +75,21 @@ margin: 0;
   color: white;
   
   
+  
 }
 
 .unselected {
   background-color: rgb(202, 15, 202);
-  color:rgb(202, 15, 202);
+  color:rgb(247, 149, 247);
+}
+
+.unselected p {
+  visibility: hidden;
 }
 
 
 
-.preselected {
+.revealed {
   background-color: aquamarine;
   color: black;
 }
@@ -129,6 +134,10 @@ button:hover {
   height: 40vh;
   background-color: rgb(228, 255, 246);
   margin: 0 5%;
+}
+
+.player li {
+  margin: 5px;
 }
 
 

@@ -9,6 +9,8 @@ const ActiveWord = (props) => {
     const [playerTwoWords, setPlayerTwoWords] = useState([]);
     const [player, setPlayer] = useState('Player1');
 
+    
+
     const lettersToWord = (selectedLetters) => {
         let word = [];
         selectedLetters.map(letter => word.push(letter.letter));
@@ -45,11 +47,14 @@ const ActiveWord = (props) => {
 
     const hideSubmitted = () => {
         let grid = document.getElementById('letter-grid');
-        let letters = grid.querySelectorAll('p.selected');
+        let letters = grid.querySelectorAll('div.selected');
         letters.forEach(letter => letter.className = 'letter submitted');
     }
 
-    const onSubmitHandler = () => {
+    const onSubmitHandler = (e) => {
+        if(props.selectedLetters.length === 0) {
+            return;
+        }
         let wordToSubmit = lettersToWord(props.selectedLetters);
         isWord(wordToSubmit);
     }

@@ -7,10 +7,6 @@ import { nanoid } from 'nanoid'
 const LetterGrid = () => {
     const [ letters, setLetters ] = useState([]);
     const [ selectedLetters, setSelectedLetters ] = useState([]);
-    
-    
-    
-    
 
     const generateGrid = () => {
         const letterArray = [];

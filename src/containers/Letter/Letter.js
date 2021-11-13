@@ -3,22 +3,12 @@ import React, { useEffect, useState } from "react";
 
 const Letter = ({selectedLetters, setSelectedLetters, key, id, value }) => {
 
-    const [classNames, setClassNames] = useState('letter unselected');
-    //const [clickCount, setClickCount] = useState(0);
-    let count = 0;
-    
-    
-    const onClickHandler = () => {
-        //setClickCount(prev => prev++);
-        count++;
-        if(count === 1) {
-            setClassNames('letter preselected');
+    const whichClass = (el, name) => {
+        if(name === 'letter unselected') {
+            el.className = 'letter revealed';
             return;
-        } else if(count === 2) {
-            setClassNames('letter selected');
-            if(selectedLetters.some(el => el.id === id)) {
-                return;
-            }
+        } else if(name === 'letter revealed' || name === 'letter stolen') {
+            el.className = 'letter selected';
             setSelectedLetters((prev) => {
                 return [
                     ...prev, 
@@ -29,18 +19,23 @@ const Letter = ({selectedLetters, setSelectedLetters, key, id, value }) => {
                 ]
             });
         }else {
-            count = 0;
-            setClassNames('letter unselected');
+            el.className = 'letter revealed';
             setSelectedLetters(prev => {
                 return prev.filter(letter => letter.id !== id)
             })
         }
     }
+    
+    const onClickHandler = (e) => {
+        whichClass(e.target, e.target.className);  
+    }
 
-    
-    
+   
     return (
-    <p className={classNames} key={id} data-id={id} onClick={onClickHandler} data-value={value}>{value}</p>
+        <div className='letter unselected' key={id} data-id={id} onClick={onClickHandler} data-value={value}>
+            <p>{value}</p>
+        </div>
+    
     )
 }
 

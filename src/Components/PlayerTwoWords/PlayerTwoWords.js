@@ -4,16 +4,16 @@ import Word from "../Word/Word";
 const PlayerTwoWords = (props) => {
 
     const onClickHandler = (letters, word) => {
+        
         let grid = document.getElementById('letter-grid');
-        let submittedLetters = Array.from(grid.querySelectorAll('p.submitted'));
-    
-        letters.forEach(letter => {
-            if(submittedLetters.some(el => 
-                el.dataset.id === letter.id
-            )) {
+        let letterIds = letters.map(el => el.id);
+        let submittedLetters = Array.from(grid.querySelectorAll('div.submitted'));
+
+        submittedLetters.forEach(letter => {
+            if (letterIds.includes(letter.dataset.id)) {
                 letter.className = 'letter stolen';
-            }
-        })
+            } 
+        });
 
         props.setWords(prev => {
             return prev.filter(el => el.word !== word)
