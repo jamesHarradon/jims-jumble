@@ -29,7 +29,7 @@ const PlayerTwoWords = (props) => {
                 )
             })}
             </ul>
-            <h1 className={props.isTurn? 'active' : 'inactive'}>Player Two</h1>
+            <h1 className={props.isTurn? 'active' : 'inactive'} onClick={() => props.changePlayer('Player2')}>Player Two</h1>
         </div>  
     )
 }

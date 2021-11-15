@@ -42,13 +42,16 @@ margin: 0;
 }
 
 #word-container {
+  position: sticky;
+  z-index: 1;
+  top: 40px;
   display: flex;
   justify-content: space-around;
-  margin: 5% auto;
+  margin: 3% auto;
 }
 
 #word {
-  width: 400px;
+  width: 500px;
   min-height: 100px;
   display: flex;
   justify-content: center;
@@ -58,9 +61,11 @@ margin: 0;
 }
 
 #letter-grid {
-  margin: 50px;
+  position: relative;
+  z-index: 2;
+  margin: 20px;
   display: grid;
-  grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+  grid-template: repeat(5, 1fr) / repeat(20, 1fr);
   grid-gap: 5px;
   
 }
@@ -125,18 +130,21 @@ button:hover {
 .player {
   display: flex;
   font-size: 2em;
-  margin: 0 5%;
+  margin: 0 1%;
 }
 
 .player ul {
   list-style: none;
-  width: 20vw;
+  display: flex;
+  flex-direction: column;
+  width: 22vw;
   height: 40vh;
   background-color: rgb(228, 255, 246);
-  margin: 0 5%;
+  margin: 0;
 }
 
 .player li {
+  font-size: 0.7em; 
   margin: 5px;
 }
 

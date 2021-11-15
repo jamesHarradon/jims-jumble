@@ -19,8 +19,8 @@ const ActiveWord = (props) => {
 
     const onClearHandler = () => {
         let grid = document.getElementById('letter-grid');
-        let letters = grid.querySelectorAll('p.selected');
-        letters.forEach(letter => letter.className = 'letter preselected');
+        let letters = grid.querySelectorAll('div.selected');
+        letters.forEach(letter => letter.className = 'letter revealed');
         props.setSelectedLetters([]);
         
     }
@@ -42,7 +42,6 @@ const ActiveWord = (props) => {
             alert('Submitted Word Not Found!');
                 onClearHandler();
         }
-        setPlayer(player === 'Player1' ? 'Player2': 'Player1');
     }
 
     const hideSubmitted = () => {
@@ -59,17 +58,21 @@ const ActiveWord = (props) => {
         isWord(wordToSubmit);
     }
 
+    const changePlayerHandler = (player) => {
+        setPlayer(player);
+    }
+
 
     return (
         <div id='word-container'>
             <div id='top-section' >
-                <PlayerOneWords words={playerOneWords} setWords={setPlayerOneWords} isTurn={player === 'Player1' ? true : false}/>
+                <PlayerOneWords changePlayer={changePlayerHandler} words={playerOneWords} setWords={setPlayerOneWords} isTurn={player === 'Player1' ? true : false}/>
                 <div id='word-btn-flex'>
                     <p id='word' data-testid='word'>{lettersToWord(props.selectedLetters)}</p>
                     <button id='clear' onClick={onClearHandler}>Clear</button> 
                     <button id='submit' onClick={onSubmitHandler}>Submit</button>
                 </div> 
-                <PlayerTwoWords words={playerTwoWords} setWords={setPlayerTwoWords} isTurn={player === 'Player2' ? true : false}/> 
+                <PlayerTwoWords changePlayer={changePlayerHandler} words={playerTwoWords} setWords={setPlayerTwoWords} isTurn={player === 'Player2' ? true : false}/> 
             </div> 
         </div>
     )

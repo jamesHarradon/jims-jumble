@@ -27,7 +27,13 @@ const Letter = ({selectedLetters, setSelectedLetters, key, id, value }) => {
     }
     
     const onClickHandler = (e) => {
-        whichClass(e.target, e.target.className);  
+        console.log(e.target);
+        let target = e.target;
+        if(e.target.nodeName === 'P') {
+            target = e.target.parentNode;
+        } 
+        
+        whichClass(target, target.className);  
     }
 
    
