@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from "react";
-
 
 const Letter = ({selectedLetters, setSelectedLetters, key, id, value }) => {
 
@@ -27,7 +25,6 @@ const Letter = ({selectedLetters, setSelectedLetters, key, id, value }) => {
     }
     
     const onClickHandler = (e) => {
-        console.log(e.target);
         let target = e.target;
         if(e.target.nodeName === 'P') {
             target = e.target.parentNode;

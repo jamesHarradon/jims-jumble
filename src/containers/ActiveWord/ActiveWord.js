@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PlayerOneWords from "../../Components/PlayerOneWords/PlayerOneWords";
 import PlayerTwoWords from "../../Components/PlayerTwoWords/PlayerTwoWords";
 import { nanoid } from 'nanoid';
