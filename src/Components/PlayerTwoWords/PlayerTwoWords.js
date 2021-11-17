@@ -29,7 +29,10 @@ const PlayerTwoWords = (props) => {
                 )
             })}
             </ul>
-            <h1 className={props.isTurn? 'active' : 'inactive'} onClick={() => props.changePlayer('Player2')}>Player Two</h1>
+            <div className='player-flex'>
+                <h1 className={props.isTurn? 'active' : 'inactive'} onClick={() => props.changePlayer('Player2')}>Player Two</h1>
+                <p className='score'>{props.words.length}</p>
+            </div>
         </div>  
     )
 }

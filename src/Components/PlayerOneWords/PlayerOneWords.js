@@ -1,8 +1,6 @@
 import React from "react";
 import Word from "../Word/Word";
 
-
-
 const PlayerOneWords = (props) => {
 
     const onClickHandler = (letters, word) => {
@@ -24,7 +22,10 @@ const PlayerOneWords = (props) => {
 
     return (
         <div id='playerOne' className='player'>
-            <h1 className={props.isTurn? 'active' : 'inactive'} onClick={() => props.changePlayer('Player1')}>Player One</h1>
+            <div className='player-flex'>
+                <h1 className={props.isTurn? 'active' : 'inactive'} onClick={() => props.changePlayer('Player1')}>Player One</h1>
+                <p className='score'>{props.words.length}</p>
+            </div>
             <ul>
             {props.words.map(word => {
                 return (

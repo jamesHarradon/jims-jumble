@@ -51,13 +51,13 @@ margin: 0;
 }
 
 #word {
-  width: 500px;
+  width: 450px;
   min-height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgb(255, 246, 215);
-  font-size: 3em;
+  font-size: 2.5em;
 }
 
 #letter-grid {
@@ -85,7 +85,7 @@ margin: 0;
 
 .unselected {
   background-color: rgb(202, 15, 202);
-  color:rgb(247, 149, 247);
+  
 }
 
 .unselected p {
@@ -133,12 +133,23 @@ button:hover {
   margin: 0 1%;
 }
 
+.player-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.player-flex p {
+  color: rgb(236, 236, 236);
+  font-size: 3em;
+}
+
+
 .player ul {
   list-style: none;
   display: flex;
   flex-direction: column;
   width: 22vw;
-  height: 40vh;
+  height: 50vh;
   background-color: rgb(228, 255, 246);
   margin: 0;
 }
@@ -163,6 +174,29 @@ button:hover {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgb(172, 172, 172);
+}
+
+@media only screen and (max-width: 500px) {
+ #letter-grid {
+  grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+ }
+
+ button {
+  font-size: 1em;
+  padding: 3%;
+  margin: 3%;
+  border: 1px solid lightgray;
+}
+
+#word {
+  width: 300px;
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(255, 246, 215);
+  font-size: 1.2em;
+}
 }
 
 
