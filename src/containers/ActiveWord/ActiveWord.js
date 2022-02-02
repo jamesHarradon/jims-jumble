@@ -30,7 +30,7 @@ const ActiveWord = (props) => {
             "method": "GET",
             "headers": {
                 "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
-                "x-rapidapi-key": "b04721659amsh0c4b41ce8d47b27p19624ejsn68be4a93c2fc"
+                "x-rapidapi-key": process.env.REACT_APP_WORDS_CLIENT_ID
             }
         });
         if (response.ok) {
