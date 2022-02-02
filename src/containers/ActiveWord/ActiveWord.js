@@ -26,7 +26,13 @@ const ActiveWord = (props) => {
     }
 
     const isWord = async(word) => {
-        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+        const response = await fetch(`https://wordsapiv1.p.rapidapi.com/words/${word}`, {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
+                "x-rapidapi-key": "b04721659amsh0c4b41ce8d47b27p19624ejsn68be4a93c2fc"
+            }
+        });
         if (response.ok) {
             if (player === 'Player1') {
                 setPlayerOneWords(prev => [...prev, {id: nanoid(), word: word, letters: props.selectedLetters}]);

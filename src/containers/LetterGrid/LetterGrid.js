@@ -38,7 +38,7 @@ const LetterGrid = () => {
     return (
         <div id='game-container'>  
             <ActiveWord selectedLetters={selectedLetters} setSelectedLetters={setSelectedLetters} />
-            <div id='letter-grid'>
+            <div id='letter-grid' data-testid='letter-grid'>
             {letters.map(letter => {
                 return <Letter selectedLetters={selectedLetters} setSelectedLetters={setSelectedLetters} key={letter.id} id={letter.id} value={letter.letter}/>
             })}

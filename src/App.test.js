@@ -1,82 +1,158 @@
-import puppeteer from 'puppeteer';
+// import puppeteer from 'puppeteer';
+import React from 'react';
+import { screen, render } from '@testing-library/react'
+import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
+import App from './App';
 
-// remember - all this tests run on the same browser session.
-// assertion library is jest
 
-let browser, page;
-
-beforeAll(async () => {
-    browser = await puppeteer.launch();
-    page = await browser.newPage();
-    await page.goto('http://localhost:3000');
-});
-
-afterAll(async () => {
-    await browser.close();
+beforeEach(() => {
+    render(<App />);
 })
 
+//cleanup happens automatically
+
 describe('App', () => {
-    test('User can launch the browser', async () => {
-        const text = await page.$eval('h1.red', el => el.innerHTML);
-        expect(text).toEqual('Player One');
+    test('Game renders correctly', () => {
+        const playerOne = screen.getByText('Player One');
+        const playerTwo = screen.getByText('Player Two');
+        const submit = screen.getByText('Submit');
+        const clear = screen.getByText('Clear');
+        const grid = screen.getByTestId('letter-grid');
+        const letterA = screen.getAllByTestId('a')[0];
+        expect(playerOne).toBeInTheDocument();
+        expect(playerTwo).toBeInTheDocument();
+        expect(submit).toBeInTheDocument();
+        expect(clear).toBeInTheDocument();
+        expect(grid).toBeInTheDocument();
+        expect(letterA).toBeInTheDocument();
     });
 });
 
-describe('LetterGrid', () => {
-    test('User can click on a letter', async () => {
-        await page.click('p[data-value="a"]');
-        const word = await page.$eval('#word', el => el.innerHTML);
-        expect(word).toEqual('a');
+describe('Letter', () => {
+    test('Player can click on a letter and it gets "revealed" class', () => {
+        const letterA = screen.getAllByTestId('a');
+        const firstLetterA = letterA[0]
+        userEvent.click(firstLetterA);
+        expect(firstLetterA).toHaveClass('letter revealed');
     });
 
-    test('When a user clicks on a letter, it gets "selected" class', async () => {
-        const letterId = await page.$eval('p[data-value="a"]', el => el.dataset.id);
-        const letterClass = await page.$eval(`p[data-id="${letterId}"]`, el => el.className);
-        expect(letterClass).toBe('letter selected');
+    test('When a player clicks on a letter, it appears in active word', () => {
+        const letterA = screen.getAllByTestId('a');
+        const firstLetterA = letterA[0];
+        //first click to reveal letter
+        userEvent.click(firstLetterA);
+        //second click to select letter
+        userEvent.click(firstLetterA);
+        const word = screen.getByTestId('word');
+        expect(word).toHaveTextContent('a');
     })
 
-    test('User can clear the letter', async () => {
-        await page.click('#clear');
-        const word = await page.$eval('#word', el => el.innerHTML);
-        expect(word).toBe('');
+    test('Player can clear the letter', () => {
+        const letterA = screen.getAllByTestId('a');
+        const firstLetterA = letterA[0];
+        //first click to reveal letter
+        userEvent.click(firstLetterA);
+        //second click to select letter
+        userEvent.click(firstLetterA);
+        const word = screen.getByTestId('word');
+        expect(word).toHaveTextContent('a');
+        const clearBtn = screen.getByText('Clear');
+        userEvent.click(clearBtn);
+        expect(word).toHaveTextContent('');
     })
+})
 
-    test('User can create a word', async () => {
-        await page.click('p[data-value="s"]');
-        await page.click('p[data-value="u"]');
-        await page.click('p[data-value="r"]');
-        await page.click('p[data-value="f"]');
 
-        const word = await page.$eval('#word', el => el.innerHTML);
-        expect(word).toEqual('surf');
+describe('Player', () => {
+    test('Player One is rendered with "active" class', async () => {
+        //test player one is active from start
+        const playerOne = screen.getByText('Player One');
+        expect(playerOne).toHaveClass('active');
+    });
+
+    test('Player Two class changes to "active" when clicked, Player One changes to "inactive"', () => {
+        const playerOne = screen.getByText('Player One');
+        const playerTwo = screen.getByText('Player Two');
+        userEvent.click(playerTwo);
+        expect(playerTwo).toHaveClass('active');
+        expect(playerOne).toHaveClass('inactive');
     })
 
     test('Player One can submit a word', async () => {
-        await page.click('#submit');
-        await page.waitForSelector('li[data-word="surf"]');
-        
-        const playerOneWord = await page.$eval('#playerOne li[data-word="surf"]', el => el.innerHTML);
-        expect(playerOneWord).toEqual('surf')
+        //first click reveal
+        userEvent.click(screen.getAllByText('a')[0]);
+        userEvent.click(screen.getAllByText('t')[0]);
+        //second click select
+        userEvent.click(screen.getAllByText('a')[0]);
+        userEvent.click(screen.getAllByText('t')[0]);
+        // submit
+        userEvent.click(screen.getByText('Submit'));
+        //wait for api to check word - default timeout for findBy* is 1000ms
+        const submittedWord = await screen.findByTestId('at', {}, { timeout: 2000});
+        expect(submittedWord).toBeInTheDocument();
         
     });
 
     test('Player Two can create a word after Player One', async () => {
-        await page.click('p[data-value="p"]');
-        await page.click('p[data-value="i"]');
-        await page.click('p[data-value="e"]');
-        
-        const word = await page.$eval('#word', el => el.innerHTML);
-        expect(word).toEqual('pie');
-        
-    })
+        userEvent.click(screen.getByText('Player Two'));
+        //first click reveal
+        userEvent.click(screen.getAllByText('s')[0]);
+        userEvent.click(screen.getAllByText('o')[0]);
+        //second click select
+        userEvent.click(screen.getAllByText('s')[0]);
+        userEvent.click(screen.getAllByText('o')[0]);
+        // submit
+        userEvent.click(screen.getByText('Submit'));
+        //wait for api call for word - default timeout for findBy* is 1000ms
+        const submittedWord = await screen.findByTestId('so', {}, { timeout: 2000});
+        expect(submittedWord).toBeInTheDocument();  
+    }) 
+})   
 
-    test('Player Two can submit their word', async () => {
-        await page.click('#submit');
-        await page.waitForTimeout(1000);
-    
-        const playerTwoWord = await page.$eval('#playerTwo li[data-word="pie"]', el => el.innerHTML);
-        expect(playerTwoWord).toEqual('pie');
+describe('Word Steal', () => {
+    test('Player Two can "steal" a word from Player One', async () => {
+        const letterS = screen.getAllByText('s')[0];
+        const letterO = screen.getAllByText('o')[0];
+        // first click reveal - Player One
+        userEvent.click(letterS);
+        userEvent.click(letterO);
+        //second click select - Player One
+        userEvent.click(letterS);
+        userEvent.click(letterO);
+        // submit - Player One
+        userEvent.click(screen.getByText('Submit'));
+        //wait for api call for word - default timeout for findBy* is 1000ms
+        const submittedWord = await screen.findByTestId('so', {}, { timeout: 2000});
+        expect(submittedWord).toBeInTheDocument();
+
+        //click Player Two header to make active
+        userEvent.click(screen.getByText('Player Two'));
+
+        const letterA = screen.getAllByText('a')[0];
+        const letterP = screen.getAllByText('p')[0];
+        //first click reveal - Player Two
+        userEvent.click(letterA);
+        userEvent.click(letterP);
+
+        //click word 'so' in Player One list - returns letters to grid
+        userEvent.click(submittedWord);
+
+        //player two clicks S and O from returned letters and O and P.
+        userEvent.click(letterS);
+        userEvent.click(letterO);
+        userEvent.click(letterA);
+        userEvent.click(letterP);
+        //submit - Player Two
+        userEvent.click(screen.getByText('Submit'));
+        const stolenWord = await screen.findByTestId('soap', {}, { timeout: 2000});
+        expect(stolenWord).toBeInTheDocument();
     })
 })
+
+
+
+
+
     
 

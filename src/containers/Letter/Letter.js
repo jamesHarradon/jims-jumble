@@ -1,5 +1,5 @@
 
-const Letter = ({selectedLetters, setSelectedLetters, key, id, value }) => {
+const Letter = ({selectedLetters, setSelectedLetters, id, value }) => {
 
     const whichClass = (el, name) => {
         if(name === 'letter unselected') {
@@ -35,7 +35,7 @@ const Letter = ({selectedLetters, setSelectedLetters, key, id, value }) => {
 
    
     return (
-        <div className='letter unselected' key={id} data-id={id} onClick={onClickHandler} data-value={value}>
+        <div className='letter unselected' key={id} data-id={id} data-testid={value} onClick={onClickHandler} data-value={value}>
             <p>{value}</p>
         </div>
     
