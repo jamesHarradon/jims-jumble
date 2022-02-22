@@ -28,18 +28,6 @@ margin: 0;
   justify-content: space-around;
 }
 
-#word-btn-flex {
- 
-}
-
-
-.active {
-  color: rgb(202, 15, 202);
-}
-
-.inactive {
-  color: rgb(170, 170, 170);
-}
 
 #word-container {
   position: sticky;
@@ -136,12 +124,34 @@ button:hover {
 .player-flex {
   display: flex;
   flex-direction: column;
+
+}
+
+.player-flex h1 {
+  font-size: 1em;
+}
+
+.player-flex .score {
+  font-size: 3em;
+  margin: 1% auto;
 }
 
 .player-flex p {
-  color: rgb(236, 236, 236);
-  font-size: 3em;
+  font-size: 0.8em;
+  width: 80%;
+  margin: 0px auto;
 }
+
+
+
+.active {
+  color:rgb(202, 15, 202);
+}
+
+.inactive {
+  color: rgb(170, 170, 170);
+}
+
 
 
 .player ul {

@@ -22,9 +22,10 @@ const PlayerOneWords = (props) => {
 
     return (
         <div id='playerOne' className='player'>
-            <div className='player-flex'>
-                <h1 className={props.isTurn? 'active' : 'inactive'} onClick={() => props.changePlayer('Player1')}>Player One</h1>
+            <div className={props.isTurn? 'player-flex active' : 'player-flex inactive'} onClick={() => props.changePlayer('Player1')}>
+                <h1>Player One</h1>
                 <p className='score'>{props.words.length}</p>
+                <p>{props.isTurn ? 'active': 'click for turn'}</p>
             </div>
             <ul>
             {props.words.map(word => {
