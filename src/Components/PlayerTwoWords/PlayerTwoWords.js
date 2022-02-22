@@ -29,7 +29,7 @@ const PlayerTwoWords = (props) => {
                 )
             })}
             </ul>
-            <div className={props.isTurn? 'player-flex active' : 'player-flex inactive'} onClick={() => props.changePlayer('Player2')}>
+            <div data-testid='Player Two' className={props.isTurn? 'player-flex active' : 'player-flex inactive'} onClick={() => props.changePlayer('Player2')}>
                 <h1>Player Two</h1>
                 <p className='score'>{props.words.length}</p>
                 <p>{props.isTurn ? 'active': 'click for turn'}</p>

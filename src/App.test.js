@@ -67,16 +67,16 @@ describe('Letter', () => {
 describe('Player', () => {
     test('Player One is rendered with "active" class', async () => {
         //test player one is active from start
-        const playerOne = screen.getByText('Player One');
-        expect(playerOne).toHaveClass('active');
+        const playerOne = screen.getByTestId('Player One');
+        expect(playerOne).toHaveClass('player-flex active');
     });
 
     test('Player Two class changes to "active" when clicked, Player One changes to "inactive"', () => {
-        const playerOne = screen.getByText('Player One');
-        const playerTwo = screen.getByText('Player Two');
+        const playerOne = screen.getByTestId('Player One');
+        const playerTwo = screen.getByTestId('Player Two');
         userEvent.click(playerTwo);
-        expect(playerTwo).toHaveClass('active');
-        expect(playerOne).toHaveClass('inactive');
+        expect(playerTwo).toHaveClass('player-flex active');
+        expect(playerOne).toHaveClass('player-flex inactive');
     })
 
     test('Player One can submit a word', async () => {
