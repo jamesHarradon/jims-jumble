@@ -77,6 +77,14 @@ const ActiveWord = (props) => {
                     <p id='word' data-testid='word'>{lettersToWord(props.selectedLetters)}</p>
                     <button id='clear' onClick={onClearHandler}>Clear</button> 
                     <button id='submit' onClick={onSubmitHandler}>Submit</button>
+                    <div id='instructions'>
+                        <h3>Instructions:</h3><br></br>
+                        <ul>
+                            <li>Each player takes turns to reveal a letter from the grid.</li>
+                            <li>When a player thinks they can make a word, they click on their designated player number, select their letters and submit the word.</li>
+                            <li>Players can steal a word from the other player if they think they can make a better word out of it and the letters available by clicking on it and using the stolen letters in their new word.</li>
+                        </ul> 
+                    </div>
                 </div> 
                 <PlayerTwoWords changePlayer={changePlayerHandler} words={playerTwoWords} setWords={setPlayerTwoWords} isTurn={player === 'Player2' ? true : false}/> 
             </div> 
