@@ -39,13 +39,29 @@ margin: 0;
 }
 
 #word {
-  width: 450px;
+  width: 95%;
   min-height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 0px auto;
   background-color: rgb(255, 246, 215);
   font-size: 2.5em;
+}
+
+#instructions {
+  text-align: justify;
+  color:rgb(170, 170, 170);
+  width: 60%;
+  margin: 0px auto;
+  
+}
+
+#instructions ul {
+  font-size: 0.8em;
+}
+
+#instructions li {
+  list-style: square;
+  
+  padding: 5px;
 }
 
 #letter-grid {
