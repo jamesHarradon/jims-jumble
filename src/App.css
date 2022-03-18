@@ -42,6 +42,9 @@ margin: 0;
   width: 95%;
   min-height: 100px;
   margin: 0px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: rgb(255, 246, 215);
   font-size: 2.5em;
 }
