@@ -83,6 +83,7 @@ const ActiveWord = (props) => {
                             <li>Each player takes turns to reveal a letter from the grid.</li>
                             <li>When a player thinks they can make a word, they click on their designated player number, select their letters and submit the word.</li>
                             <li>Players can steal a word from the other player if they think they can make a better word out of it and the letters available by clicking on it and using the stolen letters in their new word.</li>
+                            <li>The game is over when no more words can be created from the grid.</li>
                         </ul> 
                     </div>
                 </div> 
