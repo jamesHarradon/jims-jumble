@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import PlayerOneWords from "../../Components/PlayerOneWords/PlayerOneWords";
 import PlayerTwoWords from "../../Components/PlayerTwoWords/PlayerTwoWords";
 import { nanoid } from 'nanoid';
+import Instructions from "../../Components/Instructions/Instructions";
+import Modal from "../../Components/Modal/Modal";
 
 
 const ActiveWord = (props) => {
     const [playerOneWords, setPlayerOneWords] = useState([]);
     const [playerTwoWords, setPlayerTwoWords] = useState([]);
     const [player, setPlayer] = useState('Player1');
+    const [showModal, setShowModal] = useState(false)
 
     
 
@@ -70,6 +73,7 @@ const ActiveWord = (props) => {
 
 
     return (
+        <>
         <div id='word-container'>
             <div id='top-section' >
                 <PlayerOneWords changePlayer={changePlayerHandler} words={playerOneWords} setWords={setPlayerOneWords} isTurn={player === 'Player1' ? true : false}/>
@@ -77,19 +81,13 @@ const ActiveWord = (props) => {
                     <p id='word' data-testid='word'>{lettersToWord(props.selectedLetters)}</p>
                     <button id='clear' onClick={onClearHandler}>Clear</button> 
                     <button id='submit' onClick={onSubmitHandler}>Submit</button>
-                    <div id='instructions'>
-                        <h3>Instructions:</h3><br></br>
-                        <ul>
-                            <li>Each player takes turns to reveal a letter from the grid.</li>
-                            <li>When a player thinks they can make a word, they click on their designated player number, select their letters and submit the word.</li>
-                            <li>Players can steal a word from the other player if they think they can make a better word out of it and the letters available by clicking on it and using the stolen letters in their new word.</li>
-                            <li>The game is over when no more words can be created from the grid.</li>
-                        </ul> 
-                    </div>
+                    <p id='help' onClick={() => setShowModal(true)}>?</p>
                 </div> 
                 <PlayerTwoWords changePlayer={changePlayerHandler} words={playerTwoWords} setWords={setPlayerTwoWords} isTurn={player === 'Player2' ? true : false}/> 
             </div> 
         </div>
+        {showModal && <Modal content={<Instructions />} onClickHandler={setShowModal} />}
+        </>
     )
 }
 
